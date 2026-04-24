@@ -161,4 +161,4 @@ vessel.post("/bfhl", (req, res) => {
   });
 });
 const DOCK = process.env.PORT || 3000;
-vessel.listen(DOCK, () => console.log(`⚡ BFHL vessel sailing on port ${DOCK}`));
+vessel.listen(DOCK, "0.0.0.0", () => console.log(`BFHL vessel sailing on port ${DOCK}`));
