@@ -64,6 +64,9 @@ function measureDepth(node, kidsMap, memo = {}) {
   if (sprouts.length === 0) return (memo[node] = 1);
   return (memo[node] = 1 + Math.max(...sprouts.map(k => measureDepth(k, kidsMap, memo))));
 }
+vessel.get("/", (req, res) => {
+  res.send("BFHL API is alive 🚀");
+});
 vessel.post("/bfhl", (req, res) => {
   const incoming = req.body?.data;
   if (!Array.isArray(incoming)) {
