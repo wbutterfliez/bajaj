@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>BFHL Node Explorer</title>
+<title>bajaj</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
 
@@ -188,26 +188,19 @@
 </main>
 
 <script>
-const API = "http://localhost:3000/bfhl"; // ← change to your deployed URL
-
+const API = "https://bajaj-u5zx.onrender.com";
 async function fireRequest() {
   const rawInput = document.getElementById("inputArea").value.trim();
   const errBox = document.getElementById("errBox");
   const loader = document.getElementById("loader");
   const btn = document.getElementById("submitBtn");
   const result = document.getElementById("result");
-
   errBox.className = "error-box";
   result.className = "";
-
   if (!rawInput) { showErr("Please enter some node data."); return; }
-
-  // Parse: split by comma or newline, trim each
   const dataArr = rawInput.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
-
   btn.disabled = true;
   loader.className = "loading show";
-
   try {
     const res = await fetch(API, {
       method: "POST",
@@ -224,24 +217,19 @@ async function fireRequest() {
     loader.className = "loading";
   }
 }
-
 function showErr(msg) {
   const b = document.getElementById("errBox");
   b.textContent = "⚠ " + msg;
   b.className = "error-box show";
 }
-
 function renderResult(d) {
   document.getElementById("mUserId").textContent = d.user_id || "—";
   document.getElementById("mEmail").textContent = d.email_id || "—";
   document.getElementById("mRoll").textContent = d.college_roll_number || "—";
-
   const s = d.summary || {};
   document.getElementById("sTrees").textContent = s.total_trees ?? 0;
   document.getElementById("sCycles").textContent = s.total_cycles ?? 0;
   document.getElementById("sLargest").textContent = s.largest_tree_root || "—";
-
-  // Trees
   const grid = document.getElementById("treeGrid");
   grid.innerHTML = "";
   for (const h of (d.hierarchies || [])) {
@@ -256,14 +244,11 @@ function renderResult(d) {
     card.appendChild(pre);
     grid.appendChild(card);
   }
-
-  // Invalid & duplicates
   renderChips("invalidChips", d.invalid_entries || [], "inv");
   renderChips("dupChips", d.duplicate_edges || [], "dup");
 
   document.getElementById("result").className = "show";
 }
-
 function renderChips(id, arr, cls) {
   const el = document.getElementById(id);
   if (!arr.length) { el.innerHTML = `<span style="font-size:.75rem;color:var(--muted)">None</span>`; return; }
