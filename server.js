@@ -65,7 +65,7 @@ function measureDepth(node, kidsMap, memo = {}) {
   return (memo[node] = 1 + Math.max(...sprouts.map(k => measureDepth(k, kidsMap, memo))));
 }
 vessel.get("/", (req, res) => {
-  res.send("BFHL API is alive 🚀");
+  res.send("BFHL API is alive");
 });
 vessel.post("/bfhl", (req, res) => {
   const incoming = req.body?.data;
@@ -165,3 +165,6 @@ vessel.post("/bfhl", (req, res) => {
 });
 const DOCK = process.env.PORT || 3000;
 vessel.listen(DOCK, "0.0.0.0", () => console.log(`BFHL vessel sailing on port ${DOCK}`));
+vessel.get("/health", (req, res) => {
+  res.status(200).send("healthy");
+});
